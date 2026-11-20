@@ -68,7 +68,7 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
         <div class="grid">
           <div class="field">
             <label for="duration">مدت ویدئو</label>
-            <select id="duration"><option>4</option><option>5</option><option selected>8</option><option>10</option></select>
+           <select id="duration"><option selected>4</option><option>5</option></select>
           </div>
           <div class="field">
             <label for="camera">حرکت دوربین</label>
@@ -123,7 +123,7 @@ document.getElementById('prepare').addEventListener('click',()=>{
 });
 document.getElementById('clear').addEventListener('click',()=>{
   fileInput.value='';selectedFileName='';document.getElementById('prompt').value='';
-  document.getElementById('ratio').value='9:16';document.getElementById('duration').value='8';
+  document.getElementById('ratio').value='9:16';document.getElementById('duration').value='4';
   document.getElementById('camera').value='ثابت';document.getElementById('motion').value='طبیعی و کنترل‌شده';
   previewImage.removeAttribute('src');previewImage.style.display='none';placeholder.style.display='block';
 });
