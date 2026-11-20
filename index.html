@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>ARTNOVA AI — Video Studio</title>
+<style>
+:root{--gold:#d8b56a;--gold2:#f2d99a;--bg:#090909;--panel:#121212;--line:#29251c;--muted:#aaa39a}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -20%,#292114 0%,#101010 38%,#080808 78%);color:#f5f1e8;font-family:Tahoma,Arial,sans-serif;min-height:100vh}
+header{padding:28px 7vw 20px;border-bottom:1px solid #29251c;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{direction:ltr;text-align:left;letter-spacing:4px;font:600 22px Georgia,serif;color:var(--gold2)}
+.brand small{display:block;font:10px Arial,sans-serif;letter-spacing:3px;color:#aaa;margin-top:7px}
+.tag{font-size:12px;color:#bdb5a7}
+main{max-width:1050px;margin:46px auto;padding:0 22px}
+h1{font:normal clamp(27px,5vw,43px) Georgia,serif;letter-spacing:1px;text-align:center;margin:0 0 12px;color:#f4e6c7;direction:ltr}
+.intro{text-align:center;color:var(--muted);font-size:13px;line-height:2;margin:0 auto 35px;max-width:650px}
+.panel{background:linear-gradient(145deg,#171717,#101010);border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:0 18px 55px #0008}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.field{margin-bottom:19px}
+label{display:block;font-size:13px;color:var(--gold2);margin-bottom:9px}
+input[type=file],textarea,select{width:100%;background:#090909;border:1px solid #393329;border-radius:10px;color:#eee;padding:13px;font:13px Tahoma,Arial}
+textarea{min-height:125px;resize:vertical;line-height:1.9}
+select{cursor:pointer}
+.preview{min-height:250px;border:1px dashed #625234;border-radius:13px;background:#0a0a0a;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#777;text-align:center;padding:15px}
+.preview img{display:none;max-width:100%;max-height:350px;object-fit:contain}
+.hint{font-size:11px;color:#8d877d;line-height:1.8;margin-top:7px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+button{border:0;border-radius:10px;padding:13px 20px;font: bold 13px Tahoma;cursor:pointer}
+.primary{background:linear-gradient(110deg,#a77b32,#f0d99d);color:#17120a}
+.secondary{background:#24211b;color:#e8d5aa;border:1px solid #51452d}
+.notice{margin-top:22px;padding:16px;border:1px solid #51452d;background:#17140e;border-radius:12px;color:#c9b98f;font-size:12px;line-height:2}
+footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;padding:28px}
+@media(max-width:700px){header{padding:22px;flex-direction:column;align-items:flex-start}.grid{grid-template-columns:1fr}main{margin:30px auto}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">ARTNOVA<small>BEYOND IMAGINATION</small></div>
+  <div class="tag">استودیوی شخصی ساخت ویدئو با هوش مصنوعی</div>
+</header>
+<main>
+  <h1>AI VIDEO STUDIO</h1>
+  <p class="intro">ایده‌ات را به یک درخواست حرفه‌ای برای ساخت ویدئو تبدیل کن. تصویر مرجع، حرکت دوربین و حال‌وهوای صحنه را مشخص کن.</p>
+  <section class="panel">
+    <div class="grid">
+      <div>
+        <div class="field">
+          <label for="image">۱. انتخاب تصویر مرجع</label>
+          <input id="image" type="file" accept="image/*">
+          <div class="hint">تصویر فقط در همین مرورگر پیش‌نمایش داده می‌شود.</div>
+        </div>
+        <div class="preview" id="preview">
+          <span id="placeholder">پیش‌نمایش تصویر اینجا نمایش داده می‌شود</span>
+          <img id="previewImage" alt="پیش‌نمایش تصویر انتخاب‌شده">
+        </div>
+      </div>
+      <div>
+        <div class="field">
+          <label for="prompt">۲. شرح صحنه و حرکت موردنظر</label>
+          <textarea id="prompt" placeholder="مثلاً: دوربین ثابت بماند؛ شخصیت به‌آرامی دستش را بالا بیاورد و کف دست را روی شیشه بگذارد."></textarea>
+        </div>
+        <div class="field">
+          <label for="ratio">۳. نسبت تصویر</label>
+          <select id="ratio"><option value="9:16">عمودی — 9:16</option><option value="16:9">افقی — 16:9</option><option value="1:1">مربع — 1:1</option></select>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label for="duration">مدت ویدئو</label>
+            <select id="duration"><option>4</option><option>5</option><option selected>8</option><option>10</option></select>
+          </div>
+          <div class="field">
+            <label for="camera">حرکت دوربین</label>
+            <select id="camera"><option>ثابت</option><option>حرکت آهسته به جلو</option><option>حرکت آهسته به عقب</option><option>حرکت افقی نرم</option><option>چرخش آرام</option></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="motion">شدت حرکت</label>
+          <select id="motion"><option>بسیار ظریف</option><option selected>طبیعی و کنترل‌شده</option><option>پویا</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="prepare">آماده‌سازی درخواست</button>
+      <button class="secondary" id="clear" type="button">پاک‌کردن فرم</button>
+    </div>
+    <div class="notice"><strong>توضیح مهم:</strong> این نسخه، رابط اولیه ARTNOVA AI است. هنوز موتور واقعی تولید ویدئو به آن متصل نشده؛ بنابراین فعلاً ویدئو تولید نمی‌کند و هیچ سرویس پولی یا اعتبار API مصرف نمی‌کند. با دکمه بالا، مشخصات درخواستت به‌صورت فایل متنی ذخیره می‌شود.</div>
+  </section>
+</main>
+<footer>ARTNOVA AI · PERSONAL CREATIVE STUDIO</footer>
+<script>
+const fileInput=document.getElementById('image');
+const previewImage=document.getElementById('previewImage');
+const placeholder=document.getElementById('placeholder');
+let selectedFileName='';
+fileInput.addEventListener('change',()=>{
+  const file=fileInput.files&&fileInput.files[0];
+  if(!file)return;
+  selectedFileName=file.name;
+  const reader=new FileReader();
+  reader.onload=e=>{previewImage.src=e.target.result;previewImage.style.display='block';placeholder.style.display='none';};
+  reader.readAsDataURL(file);
+});
+document.getElementById('prepare').addEventListener('click',()=>{
+  const prompt=document.getElementById('prompt').value.trim();
+  if(!prompt){alert('لطفاً شرح صحنه و حرکت موردنظر را وارد کن.');return;}
+  const content=[
+    'ARTNOVA AI — VIDEO REQUEST',
+    'Image file: '+(selectedFileName||'Not selected'),
+    'Prompt: '+prompt,
+    'Aspect ratio: '+document.getElementById('ratio').value,
+    'Duration: '+document.getElementById('duration').value+' seconds',
+    'Camera movement: '+document.getElementById('camera').value,
+    'Motion intensity: '+document.getElementById('motion').value,
+    '',
+    'Note: This is a prepared request brief. No video generation engine is connected yet.'
+  ].join('\n');
+  const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='ARTNOVA-AI-video-request.txt';a.click();
+  URL.revokeObjectURL(url);
+});
+document.getElementById('clear').addEventListener('click',()=>{
+  fileInput.value='';selectedFileName='';document.getElementById('prompt').value='';
+  document.getElementById('ratio').value='9:16';document.getElementById('duration').value='8';
+  document.getElementById('camera').value='ثابت';document.getElementById('motion').value='طبیعی و کنترل‌شده';
+  previewImage.removeAttribute('src');previewImage.style.display='none';placeholder.style.display='block';
+});
+</script>
+</body>
+</html>
