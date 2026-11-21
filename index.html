@@ -127,6 +127,73 @@ document.getElementById('clear').addEventListener('click',()=>{
   document.getElementById('camera').value='ثابت';document.getElementById('motion').value='طبیعی و کنترل‌شده';
   previewImage.removeAttribute('src');previewImage.style.display='none';placeholder.style.display='block';
 }); 
+	
+async function prepareImageForRatio(file, ratio) {
+  const sizes = {
+    "9:16": [576, 1024],
+    "16:9": [1024, 576],
+    "1:1": [832, 832]
+  };
+
+  const [width, height] = sizes[ratio];
+  const image = await createImageBitmap(file);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext("2d");
+
+  // Blurred background
+  const scaleCover = Math.max(
+    width / image.width,
+    height / image.height
+  );
+
+  const bgWidth = image.width * scaleCover;
+  const bgHeight = image.height * scaleCover;
+
+  ctx.save();
+  ctx.filter = "blur(35px)";
+  ctx.drawImage(
+    image,
+    (width - bgWidth) / 2,
+    (height - bgHeight) / 2,
+    bgWidth,
+    bgHeight
+  );
+  ctx.restore();
+
+  // Original image without cropping
+  const scaleContain = Math.min(
+    width / image.width,
+    height / image.height
+  );
+
+  const drawWidth = image.width * scaleContain;
+  const drawHeight = image.height * scaleContain;
+
+  ctx.drawImage(
+    image,
+    (width - drawWidth) / 2,
+    (height - drawHeight) / 2,
+    drawWidth,
+    drawHeight
+  );
+
+  image.close();
+
+  const blob = await new Promise(resolve =>
+    canvas.toBlob(resolve, "image/jpeg", 0.95)
+  );
+
+  if (!blob) throw new Error("Image processing failed");
+
+  return new File([blob], "artnova-input.jpg", {
+    type: "image/jpeg"
+  });
+}
+
  // ARTNOVA Wan 2.2 connection
 
 	const WAN_SPACE = "zerogpu-aoti/wan2-2-fp8da-aoti-faster";
@@ -152,8 +219,12 @@ document.getElementById('clear').addEventListener('click',()=>{
   try {
     const app = await Client.connect(WAN_SPACE);
     const result = await app.predict('/generate_video', {
-      input_image: handle_file(file),
-      prompt: promptText,
+input_image: handle_file(
+  await prepareImageForRatio(
+    file,
+    document.getElementById('ratio').value
+  )
+),      prompt: promptText,
       steps: 6,
       negative_prompt: 'blurry, distorted, low quality, flicker, artifacts',
       duration_seconds: Number(document.getElementById('duration').value),
