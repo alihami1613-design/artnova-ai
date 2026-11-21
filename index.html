@@ -6,36 +6,164 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
 <title>ARTNOVA AI — Video Studio</title>
+
 <style>
-:root{--gold:#d8b56a;--gold2:#f2d99a;--bg:#090909;--panel:#121212;--line:#29251c;--muted:#aaa39a}
+:root{
+  --gold:#d8b56a;
+  --gold2:#f2d99a;
+  --bg:#090909;
+  --panel:#121212;
+  --line:#29251c;
+  --muted:#aaa39a;
+}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 50% -20%,#292114 0%,#101010 38%,#080808 78%);color:#f5f1e8;font-family:Tahoma,Arial,sans-serif;min-height:100vh}
-header{padding:28px 7vw 20px;border-bottom:1px solid #29251c;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{direction:ltr;text-align:left;letter-spacing:4px;font:600 22px Georgia,serif;color:var(--gold2)}
-.brand small{display:block;font:10px Arial,sans-serif;letter-spacing:3px;color:#aaa;margin-top:7px}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at 50% -20%,#292114 0%,#101010 38%,#080808 78%);
+  color:#f5f1e8;
+  font-family:Tahoma,Arial,sans-serif;
+  min-height:100vh;
+}
+header{
+  padding:28px 7vw 20px;
+  border-bottom:1px solid #29251c;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  direction:ltr;
+  text-align:left;
+  letter-spacing:4px;
+  font:600 22px Georgia,serif;
+  color:var(--gold2);
+}
+.brand small{
+  display:block;
+  font:10px Arial,sans-serif;
+  letter-spacing:3px;
+  color:#aaa;
+  margin-top:7px;
+}
 .tag{font-size:12px;color:#bdb5a7}
 main{max-width:1050px;margin:46px auto;padding:0 22px}
-h1{font:normal clamp(27px,5vw,43px) Georgia,serif;letter-spacing:1px;text-align:center;margin:0 0 12px;color:#f4e6c7;direction:ltr}
-.intro{text-align:center;color:var(--muted);font-size:13px;line-height:2;margin:0 auto 35px;max-width:650px}
-.panel{background:linear-gradient(145deg,#171717,#101010);border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:0 18px 55px #0008}
+h1{
+  font:normal clamp(27px,5vw,43px) Georgia,serif;
+  letter-spacing:1px;
+  text-align:center;
+  margin:0 0 12px;
+  color:#f4e6c7;
+  direction:ltr;
+}
+.intro{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  line-height:2;
+  margin:0 auto 35px;
+  max-width:650px;
+}
+.panel{
+  background:linear-gradient(145deg,#171717,#101010);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 18px 55px #0008;
+}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .field{margin-bottom:19px}
-label{display:block;font-size:13px;color:var(--gold2);margin-bottom:9px}
-input[type=file],textarea,select{width:100%;background:#090909;border:1px solid #393329;border-radius:10px;color:#eee;padding:13px;font:13px Tahoma,Arial}
+label{
+  display:block;
+  font-size:13px;
+  color:var(--gold2);
+  margin-bottom:9px;
+}
+input[type=file],textarea,select{
+  width:100%;
+  background:#090909;
+  border:1px solid #393329;
+  border-radius:10px;
+  color:#eee;
+  padding:13px;
+  font:13px Tahoma,Arial;
+}
 textarea{min-height:125px;resize:vertical;line-height:1.9}
 select{cursor:pointer}
-.preview{min-height:250px;border:1px dashed #625234;border-radius:13px;background:#0a0a0a;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#777;text-align:center;padding:15px}
-.preview img{display:none;max-width:100%;max-height:350px;object-fit:contain}
+.preview{
+  min-height:250px;
+  border:1px dashed #625234;
+  border-radius:13px;
+  background:#0a0a0a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  color:#777;
+  text-align:center;
+  padding:15px;
+}
+.preview img{
+  display:none;
+  max-width:100%;
+  max-height:350px;
+  object-fit:contain;
+}
 .hint{font-size:11px;color:#8d877d;line-height:1.8;margin-top:7px}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-button{border:0;border-radius:10px;padding:13px 20px;font:bold 13px Tahoma;cursor:pointer}
+button{
+  border:0;
+  border-radius:10px;
+  padding:13px 20px;
+  font:bold 13px Tahoma;
+  cursor:pointer;
+}
 button:disabled{opacity:.55;cursor:wait}
-.primary{background:linear-gradient(110deg,#a77b32,#f0d99d);color:#17120a}
-.secondary{background:#24211b;color:#e8d5aa;border:1px solid #51452d}
-.notice{margin-top:22px;padding:16px;border:1px solid #51452d;background:#17140e;border-radius:12px;color:#c9b98f;font-size:12px;line-height:2}
-footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;padding:28px}
-@media(max-width:700px){header{padding:22px;flex-direction:column;align-items:flex-start}.grid{grid-template-columns:1fr}main{margin:30px auto}.panel{padding:18px}}
+.primary{
+  background:linear-gradient(110deg,#a77b32,#f0d99d);
+  color:#17120a;
+}
+.secondary{
+  background:#24211b;
+  color:#e8d5aa;
+  border:1px solid #51452d;
+}
+.notice{
+  margin-top:22px;
+  padding:16px;
+  border:1px solid #51452d;
+  background:#17140e;
+  border-radius:12px;
+  color:#c9b98f;
+  font-size:12px;
+  line-height:2;
+}
+.status{
+  display:none;
+  margin-top:15px;
+  padding:12px 15px;
+  border-radius:10px;
+  background:#17140e;
+  border:1px solid #51452d;
+  color:#e3cc99;
+  font-size:12px;
+  line-height:1.9;
+}
+footer{
+  text-align:center;
+  color:#6e685e;
+  font:10px Arial;
+  letter-spacing:2px;
+  padding:28px;
+}
+@media(max-width:700px){
+  header{padding:22px;flex-direction:column;align-items:flex-start}
+  .grid{grid-template-columns:1fr}
+  main{margin:30px auto}
+  .panel{padding:18px}
+}
 </style>
+
 <script type="importmap">
 {
   "imports": {
@@ -44,26 +172,41 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
 }
 </script>
 </head>
+
 <body>
+
 <header>
-  <div class="brand">ARTNOVA<small>BEYOND IMAGINATION</small></div>
+  <div class="brand">
+    ARTNOVA
+    <small>BEYOND IMAGINATION</small>
+  </div>
   <div class="tag">استودیوی شخصی ساخت ویدئو با هوش مصنوعی</div>
 </header>
 
 <main>
   <h1>AI VIDEO STUDIO</h1>
-  <p class="intro">ایده‌ات را به یک درخواست حرفه‌ای برای ساخت ویدئو تبدیل کن. تصویر مرجع، حرکت دوربین و حال‌وهوای صحنه را مشخص کن.</p>
+
+  <p class="intro">
+    ایده‌ات را به یک درخواست حرفه‌ای برای ساخت ویدئو تبدیل کن.
+    تصویر مرجع، حرکت دوربین و حال‌وهوای صحنه را مشخص کن.
+  </p>
 
   <section class="panel">
+
     <div class="grid">
       <div>
         <div class="field">
           <label for="image">۱. انتخاب تصویر مرجع</label>
           <input id="image" type="file" accept="image/*">
-          <div class="hint">تصویر فقط در همین مرورگر پیش‌نمایش داده می‌شود.</div>
+          <div class="hint">
+            تصویر انتخاب‌شده برای تولید ویدئو به سرور ارسال می‌شود.
+          </div>
         </div>
+
         <div class="preview" id="preview">
-          <span id="placeholder">پیش‌نمایش تصویر اینجا نمایش داده می‌شود</span>
+          <span id="placeholder">
+            پیش‌نمایش تصویر اینجا نمایش داده می‌شود
+          </span>
           <img id="previewImage" alt="پیش‌نمایش تصویر انتخاب‌شده">
         </div>
       </div>
@@ -71,7 +214,10 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
       <div>
         <div class="field">
           <label for="prompt">۲. شرح صحنه و حرکت موردنظر</label>
-          <textarea id="prompt" placeholder="مثلاً: دوربین ثابت بماند؛ شخصیت به‌آرامی دستش را بالا بیاورد و کف دست را روی شیشه بگذارد."></textarea>
+          <textarea
+            id="prompt"
+            placeholder="مثلاً: دوربین ثابت بماند؛ شخصیت به‌آرامی دستش را بالا بیاورد و کف دست را روی شیشه بگذارد."
+          ></textarea>
         </div>
 
         <div class="field">
@@ -126,19 +272,34 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
     </div>
 
     <div class="actions">
-      <button class="primary" id="prepare">آماده‌سازی درخواست</button>
-      <button class="secondary" id="clear" type="button">پاک‌کردن فرم</button>
+      <button class="primary" id="prepare" type="button">
+        تولید ویدئو
+      </button>
+
+      <button class="secondary" id="clear" type="button">
+        پاک‌کردن فرم
+      </button>
     </div>
+
+    <div class="status" id="status" role="status" aria-live="polite"></div>
 
     <div class="field" style="margin-top:22px">
       <label>ویدئوی تولیدشده توسط ARTNOVA</label>
-      <video id="videoResult" controls playsinline style="display:none;width:100%;border-radius:12px;background:#000"></video>
+      <video
+        id="videoResult"
+        controls
+        playsinline
+        style="display:none;width:100%;border-radius:12px;background:#000"
+      ></video>
     </div>
 
     <div class="notice">
       <strong>توضیح مهم:</strong>
-      موتور تولید ویدئوی Wan 2.2 متصل می‌شود. برای کاهش مصرف سریع سهمیه ZeroGPU هنگام آزمون‌وخطا، حالت «اقتصادی» را روی ۳ ثانیه و ابعاد سبک‌تر قرار دهید و فقط وقتی از نتیجه راضی شدید روی حالت «متعادل» یا ۵ ثانیه بگذارید.
+      موتور تولید ویدئوی Wan 2.2 متصل می‌شود.
+      حالت اقتصادی برای آزمایش اولیه طراحی شده است.
+      استفاده از توکن Hugging Face به‌تنهایی تضمین‌کننده سهمیه بیشتر نیست.
     </div>
+
   </section>
 </main>
 
@@ -147,26 +308,48 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
 <script type="module">
 import { Client, handle_file } from "@gradio/client";
 
+const TARGET_SPACE =
+  "https://artnova-ai-backend.alihami00999.workers.dev";
+
 const fileInput = document.getElementById("image");
 const previewImage = document.getElementById("previewImage");
 const placeholder = document.getElementById("placeholder");
 const video = document.getElementById("videoResult");
 const button = document.getElementById("prepare");
+const statusBox = document.getElementById("status");
 
-// اگر Space مستقیم قابل دسترسی است می‌توانید نام Space را بگذارید؛ در غیر این صورت از آدرس بک‌اند استفاده می‌شود
-const TARGET_SPACE = "https://artnova-ai-backend.alihami00999.workers.dev";
+let previewObjectUrl = null;
+
+function showStatus(message) {
+  statusBox.textContent = message;
+  statusBox.style.display = "block";
+}
+
+function hideStatus() {
+  statusBox.textContent = "";
+  statusBox.style.display = "none";
+}
 
 fileInput.addEventListener("change", () => {
-  const file = fileInput.files && fileInput.files[0];
+  const file = fileInput.files?.[0];
+
   if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = e => {
-    previewImage.src = e.target.result;
-    previewImage.style.display = "block";
-    placeholder.style.display = "none";
-  };
-  reader.readAsDataURL(file);
+  if (!file.type.startsWith("image/")) {
+    alert("لطفاً یک فایل تصویری معتبر انتخاب کن.");
+    fileInput.value = "";
+    return;
+  }
+
+  if (previewObjectUrl) {
+    URL.revokeObjectURL(previewObjectUrl);
+  }
+
+  previewObjectUrl = URL.createObjectURL(file);
+
+  previewImage.src = previewObjectUrl;
+  previewImage.style.display = "block";
+  placeholder.style.display = "none";
 });
 
 document.getElementById("clear").addEventListener("click", () => {
@@ -177,12 +360,22 @@ document.getElementById("clear").addEventListener("click", () => {
   document.getElementById("quotaMode").value = "eco";
   document.getElementById("camera").value = "ثابت";
   document.getElementById("motion").value = "طبیعی و کنترل‌شده";
+
+  if (previewObjectUrl) {
+    URL.revokeObjectURL(previewObjectUrl);
+    previewObjectUrl = null;
+  }
+
   previewImage.removeAttribute("src");
   previewImage.style.display = "none";
   placeholder.style.display = "block";
+
   video.pause();
   video.removeAttribute("src");
+  video.load();
   video.style.display = "none";
+
+  hideStatus();
 });
 
 async function prepareImageForRatio(file, ratio, mode) {
@@ -198,43 +391,111 @@ async function prepareImageForRatio(file, ratio, mode) {
     "1:1": [832, 832]
   };
 
-  const palette = mode === "balanced" ? balancedSizes : ecoSizes;
+  const palette =
+    mode === "balanced" ? balancedSizes : ecoSizes;
+
   const [width, height] = palette[ratio];
 
   const image = await createImageBitmap(file);
+
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
 
   const ctx = canvas.getContext("2d");
 
-  const scaleCover = Math.max(width / image.width, height / image.height);
+  if (!ctx) {
+    image.close();
+    throw new Error("امکان پردازش تصویر در مرورگر وجود ندارد.");
+  }
+
+  // پس‌زمینه محو برای حفظ نسبت تصویر
+  const scaleCover = Math.max(
+    width / image.width,
+    height / image.height
+  );
+
   const bgWidth = image.width * scaleCover;
   const bgHeight = image.height * scaleCover;
 
   ctx.save();
   ctx.filter = "blur(35px)";
-  ctx.drawImage(image, (width - bgWidth) / 2, (height - bgHeight) / 2, bgWidth, bgHeight);
+  ctx.drawImage(
+    image,
+    (width - bgWidth) / 2,
+    (height - bgHeight) / 2,
+    bgWidth,
+    bgHeight
+  );
   ctx.restore();
 
-  const scaleContain = Math.min(width / image.width, height / image.height);
+  // قرار دادن تصویر اصلی بدون برش
+  const scaleContain = Math.min(
+    width / image.width,
+    height / image.height
+  );
+
   const drawWidth = image.width * scaleContain;
   const drawHeight = image.height * scaleContain;
 
-  ctx.drawImage(image, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
+  ctx.drawImage(
+    image,
+    (width - drawWidth) / 2,
+    (height - drawHeight) / 2,
+    drawWidth,
+    drawHeight
+  );
+
   image.close();
 
   const quality = mode === "balanced" ? 0.92 : 0.85;
-  const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", quality));
 
-  if (!blob) throw new Error("Image processing failed");
+  const blob = await new Promise(resolve => {
+    canvas.toBlob(resolve, "image/jpeg", quality);
+  });
 
-  return new File([blob], "artnova-input.jpg", { type: "image/jpeg" });
+  if (!blob) {
+    throw new Error("تبدیل تصویر به فرمت JPEG ناموفق بود.");
+  }
+
+  return new File(
+    [blob],
+    "artnova-input.jpg",
+    { type: "image/jpeg" }
+  );
+}
+
+function getVideoUrl(output) {
+  if (!output) return null;
+
+  if (typeof output === "string") {
+    return output;
+  }
+
+  return (
+    output.url ||
+    output.video?.url ||
+    output.path ||
+    output.video?.path ||
+    output.name ||
+    null
+  );
+}
+
+function resolveVideoUrl(url) {
+  if (!url) return null;
+
+  try {
+    return new URL(url, TARGET_SPACE + "/").href;
+  } catch {
+    return null;
+  }
 }
 
 button.addEventListener("click", async () => {
-  const file = fileInput.files && fileInput.files[0];
-  const promptText = document.getElementById("prompt").value.trim();
+  const file = fileInput.files?.[0];
+  const promptText =
+    document.getElementById("prompt").value.trim();
 
   if (!file) {
     alert("لطفاً ابتدا یک تصویر انتخاب کن.");
@@ -249,7 +510,10 @@ button.addEventListener("click", async () => {
   const camera = document.getElementById("camera").value;
   const motion = document.getElementById("motion").value;
   const mode = document.getElementById("quotaMode").value;
-  const durationSeconds = Number(document.getElementById("duration").value);
+
+  const durationSeconds =
+    Number(document.getElementById("duration").value);
+
   const steps = mode === "balanced" ? 6 : 4;
 
   const finalPrompt =
@@ -259,10 +523,15 @@ button.addEventListener("click", async () => {
     ". Preserve the original subject, composition and visual identity.";
 
   button.disabled = true;
-  button.textContent = "در حال تولید ویدئو...";
+  button.textContent = "در حال اتصال...";
+
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+  video.style.display = "none";
 
   try {
-    const app = await Client.connect(TARGET_SPACE);
+    showStatus("در حال آماده‌سازی تصویر...");
 
     const processedImage = await prepareImageForRatio(
       file,
@@ -270,36 +539,65 @@ button.addEventListener("click", async () => {
       mode
     );
 
-    const result = await app.predict("/generate_video", {
-      input_image: handle_file(processedImage),
-      prompt: finalPrompt,
+    showStatus("در حال اتصال به موتور Wan 2.2...");
+
+    const app = await Client.connect(TARGET_SPACE);
+
+    button.textContent = "در حال تولید ویدئو...";
+    showStatus(
+      "تصویر ارسال شد. موتور Wan 2.2 در حال تولید ویدئو است. لطفاً صفحه را نبند."
+    );
+
+    // ترتیب ورودی‌ها باید دقیقاً با ترتیب ورودی‌های Space مطابقت داشته باشد.
+    const result = await app.predict("/generate_video", [
+      handle_file(processedImage),
+      finalPrompt,
       steps,
-      negative_prompt: "blurry, distorted, low quality, flicker, artifacts",
-      duration_seconds: durationSeconds,
-      guidance_scale: 1,
-      guidance_scale_2: 1,
-      seed: 42,
-      randomize_seed: true
-    });
+      "blurry, distorted, low quality, flicker, artifacts",
+      durationSeconds,
+      1,
+      1,
+      42,
+      true
+    ]);
 
-    const output = result.data[0];
+    const output = result?.data?.[0];
+    const rawVideoUrl = getVideoUrl(output);
+    const videoUrl = resolveVideoUrl(rawVideoUrl);
 
-    if (!output || !output.url) {
-      throw new Error("ویدئوی خروجی دریافت نشد.");
+    if (!videoUrl) {
+      console.error("Unexpected Gradio response:", result);
+      throw new Error(
+        "آدرس ویدئوی خروجی پیدا نشد. ساختار پاسخ سرور را بررسی کن."
+      );
     }
 
-    video.src = output.url;
+    video.src = videoUrl;
     video.style.display = "block";
     video.load();
 
+    video.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    showStatus("تولید ویدئو با موفقیت انجام شد.");
+
   } catch (error) {
-    console.error(error);
-    alert("خطا در تولید ویدئو: " + error.message);
+    console.error("ARTNOVA generation error:", error);
+
+    const message =
+      error?.message || String(error);
+
+    showStatus("تولید ویدئو ناموفق بود: " + message);
+    alert("خطا در تولید ویدئو:\n" + message);
+
   } finally {
     button.disabled = false;
-    button.textContent = "آماده‌سازی درخواست";
+    button.textContent = "تولید ویدئو";
   }
 });
 </script>
+
 </body>
 </html>
