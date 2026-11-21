@@ -85,13 +85,23 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
 
         <div class="grid">
           <div class="field">
-            <label for="duration">مدت ویدئو</label>
+            <label for="duration">مدت ویدئو (ثانیه)</label>
             <select id="duration">
-              <option selected>5</option>
-              <option>5</option>
+              <option value="3" selected>3 ثانیه (کم‌مصرف)</option>
+              <option value="5">5 ثانیه (پرتر)</option>
             </select>
           </div>
 
+          <div class="field">
+            <label for="quotaMode">حالت مصرف سهمیه</label>
+            <select id="quotaMode">
+              <option value="eco" selected>اقتصادی برای تست بیشتر</option>
+              <option value="balanced">متعادل (کیفیت بالاتر)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid">
           <div class="field">
             <label for="camera">حرکت دوربین</label>
             <select id="camera">
@@ -102,15 +112,15 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
               <option>چرخش آرام</option>
             </select>
           </div>
-        </div>
 
-        <div class="field">
-          <label for="motion">شدت حرکت</label>
-          <select id="motion">
-            <option>بسیار ظریف</option>
-            <option selected>طبیعی و کنترل‌شده</option>
-            <option>پویا</option>
-          </select>
+          <div class="field">
+            <label for="motion">شدت حرکت</label>
+            <select id="motion">
+              <option>بسیار ظریف</option>
+              <option selected>طبیعی و کنترل‌شده</option>
+              <option>پویا</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -127,7 +137,7 @@ footer{text-align:center;color:#6e685e;font:10px Arial;letter-spacing:2px;paddin
 
     <div class="notice">
       <strong>توضیح مهم:</strong>
-      موتور تولید ویدئوی Wan 2.2 از طریق سرور ARTNOVA متصل می‌شود. برای تولید ویدئو، انتخاب تصویر مرجع الزامی است. تولید صدا در این نسخه پشتیبانی نمی‌شود.
+      موتور تولید ویدئوی Wan 2.2 متصل می‌شود. برای کاهش مصرف سریع سهمیه ZeroGPU هنگام آزمون‌وخطا، حالت «اقتصادی» را روی ۳ ثانیه و ابعاد سبک‌تر قرار دهید و فقط وقتی از نتیجه راضی شدید روی حالت «متعادل» یا ۵ ثانیه بگذارید.
     </div>
   </section>
 </main>
@@ -143,7 +153,8 @@ const placeholder = document.getElementById("placeholder");
 const video = document.getElementById("videoResult");
 const button = document.getElementById("prepare");
 
-const WAN_SPACE = "https://artnova-ai-backend.alihami00999.workers.dev";
+// اگر Space مستقیم قابل دسترسی است می‌توانید نام Space را بگذارید؛ در غیر این صورت از آدرس بک‌اند استفاده می‌شود
+const TARGET_SPACE = "https://artnova-ai-backend.alihami00999.workers.dev";
 
 fileInput.addEventListener("change", () => {
   const file = fileInput.files && fileInput.files[0];
@@ -162,7 +173,8 @@ document.getElementById("clear").addEventListener("click", () => {
   fileInput.value = "";
   document.getElementById("prompt").value = "";
   document.getElementById("ratio").value = "9:16";
-  document.getElementById("duration").value = "4";
+  document.getElementById("duration").value = "3";
+  document.getElementById("quotaMode").value = "eco";
   document.getElementById("camera").value = "ثابت";
   document.getElementById("motion").value = "طبیعی و کنترل‌شده";
   previewImage.removeAttribute("src");
@@ -173,14 +185,22 @@ document.getElementById("clear").addEventListener("click", () => {
   video.style.display = "none";
 });
 
-async function prepareImageForRatio(file, ratio) {
-  const sizes = {
+async function prepareImageForRatio(file, ratio, mode) {
+  const ecoSizes = {
+    "9:16": [432, 768],
+    "16:9": [768, 432],
+    "1:1": [640, 640]
+  };
+
+  const balancedSizes = {
     "9:16": [576, 1024],
     "16:9": [1024, 576],
     "1:1": [832, 832]
   };
 
-  const [width, height] = sizes[ratio];
+  const palette = mode === "balanced" ? balancedSizes : ecoSizes;
+  const [width, height] = palette[ratio];
+
   const image = await createImageBitmap(file);
   const canvas = document.createElement("canvas");
   canvas.width = width;
@@ -188,52 +208,28 @@ async function prepareImageForRatio(file, ratio) {
 
   const ctx = canvas.getContext("2d");
 
-  const scaleCover = Math.max(
-    width / image.width,
-    height / image.height
-  );
-
+  const scaleCover = Math.max(width / image.width, height / image.height);
   const bgWidth = image.width * scaleCover;
   const bgHeight = image.height * scaleCover;
 
   ctx.save();
   ctx.filter = "blur(35px)";
-  ctx.drawImage(
-    image,
-    (width - bgWidth) / 2,
-    (height - bgHeight) / 2,
-    bgWidth,
-    bgHeight
-  );
+  ctx.drawImage(image, (width - bgWidth) / 2, (height - bgHeight) / 2, bgWidth, bgHeight);
   ctx.restore();
 
-  const scaleContain = Math.min(
-    width / image.width,
-    height / image.height
-  );
-
+  const scaleContain = Math.min(width / image.width, height / image.height);
   const drawWidth = image.width * scaleContain;
   const drawHeight = image.height * scaleContain;
 
-  ctx.drawImage(
-    image,
-    (width - drawWidth) / 2,
-    (height - drawHeight) / 2,
-    drawWidth,
-    drawHeight
-  );
-
+  ctx.drawImage(image, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
   image.close();
 
-  const blob = await new Promise(resolve =>
-    canvas.toBlob(resolve, "image/jpeg", 0.95)
-  );
+  const quality = mode === "balanced" ? 0.92 : 0.85;
+  const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", quality));
 
   if (!blob) throw new Error("Image processing failed");
 
-  return new File([blob], "artnova-input.jpg", {
-    type: "image/jpeg"
-  });
+  return new File([blob], "artnova-input.jpg", { type: "image/jpeg" });
 }
 
 button.addEventListener("click", async () => {
@@ -252,6 +248,9 @@ button.addEventListener("click", async () => {
 
   const camera = document.getElementById("camera").value;
   const motion = document.getElementById("motion").value;
+  const mode = document.getElementById("quotaMode").value;
+  const durationSeconds = Number(document.getElementById("duration").value);
+  const steps = mode === "balanced" ? 6 : 4;
 
   const finalPrompt =
     promptText +
@@ -263,19 +262,20 @@ button.addEventListener("click", async () => {
   button.textContent = "در حال تولید ویدئو...";
 
   try {
-    const app = await Client.connect(WAN_SPACE);
+    const app = await Client.connect(TARGET_SPACE);
 
     const processedImage = await prepareImageForRatio(
       file,
-      document.getElementById("ratio").value
+      document.getElementById("ratio").value,
+      mode
     );
 
     const result = await app.predict("/generate_video", {
       input_image: handle_file(processedImage),
       prompt: finalPrompt,
-      steps: 6,
+      steps,
       negative_prompt: "blurry, distorted, low quality, flicker, artifacts",
-      duration_seconds: Number(document.getElementById("duration").value),
+      duration_seconds: durationSeconds,
       guidance_scale: 1,
       guidance_scale_2: 1,
       seed: 42,
